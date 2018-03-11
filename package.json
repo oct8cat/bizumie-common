@@ -7,6 +7,7 @@
   "author": "Sergey Elsukov <oct8cat@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "jsonwebtoken": "^8.2.0",
     "mongoose": "^5.0.9"
   },
   "devDependencies": {
