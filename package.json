@@ -1,0 +1,34 @@
+{
+  "name": "bizumie-common",
+  "version": "1.0.0",
+  "description": "bizumie-common",
+  "main": "lib/index.js",
+  "keywords": [],
+  "author": "Sergey Elsukov <oct8cat@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^5.0.9"
+  },
+  "devDependencies": {
+    "mocha": "^5.0.4",
+    "prettier": "^1.11.1",
+    "standard": "^11.0.0"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test mocha --no-colors",
+    "lint": "standard",
+    "fix": "prettier --no-semi --single-quote --arrow-parens=always --write './**/*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oct8cat/bizumie-common.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oct8cat/bizumie-common/issues"
+  },
+  "homepage": "https://github.com/oct8cat/bizumie-common#readme"
+}
