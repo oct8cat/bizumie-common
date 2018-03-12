@@ -2,8 +2,8 @@
 
 const assert = require('assert')
 const {
-  env,
-  db: { getUserModel, disconnectDb, createDb, connectDb, generateUserToken },
+  env: { getNodeEnv, getJWTSecret, getDbURI, getPublicDir },
+  db: { getUserModel, disconnectDb, createDb, connectDb },
   http: { createServer, startServer, stopServer, createUserJWT }
 } = require('..')
 
@@ -43,10 +43,13 @@ describe('db', () => {
 
 describe('env', () => {
   it('getNodeEnv', () => {
-    assert.equal(env.getNodeEnv(), 'test')
+    assert.equal(getNodeEnv(), 'test')
   })
   it('getDbURI', () => {
-    assert.ok(env.getDbURI().match(/test/))
+    assert.ok(getDbURI().match(/bizumie-test/))
+  })
+  it('getJWTSecret', () => {
+    assert.equal(typeof getJWTSecret(), 'string')
   })
 })
 
