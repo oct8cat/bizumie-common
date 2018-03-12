@@ -2,7 +2,7 @@
 
 const assert = require('assert')
 const {
-  env: { getNodeEnv, getJWTSecret, getDbURI, getPublicDir },
+  env: { getNodeEnv, getJWTSecret, getDbURI },
   db: { getUserModel, disconnectDb, createDb, connectDb },
   http: { createServer, startServer, stopServer, createUserJWT }
 } = require('..')
