@@ -1,10 +1,11 @@
 /* eslint-env mocha */
 
 const assert = require('assert')
+const { length } = require('ramda')
 const {
-  env: { getNodeEnv, getJWTSecret, getDbURI },
-  db: { getUserModel, disconnectDb, createDb, connectDb },
-  http: { createServer, startServer, stopServer, createUserJWT }
+  db: { disconnectDb, createDb, connectDb, getUserModel, getUploadModel },
+  http: { createServer, startServer, stopServer },
+  user: { createUserToken }
 } = require('..')
 
 describe('db', () => {
@@ -19,37 +20,10 @@ describe('db', () => {
       .then(() => disconnectDb(db))
       .then(() => assert.equal(db.connection.readyState, 0))
   })
-  describe('With `db` created and connected', () => {
-    let db
-    beforeEach(() => connectDb((db = createDb())))
-    afterEach(() => disconnectDb(db))
-
-    it('getUserModel(db).create', () => {
-      const displayName = 'test'
-      const oauth = { provider: 'test', id: 'test' }
-      const userModel = getUserModel(db)
-      return userModel
-        .remove({ displayName })
-        .then(() => userModel.create({ displayName, oauths: [oauth] }))
-        .then((user) => {
-          assert.equal(user.displayName, displayName)
-          assert.equal(user.oauths.length, 1)
-          assert.equal(user.oauths[0].provider, oauth.provider)
-          assert.equal(user.oauths[0].id, oauth.id)
-        })
-    })
-  })
-})
-
-describe('env', () => {
-  it('getNodeEnv', () => {
-    assert.equal(getNodeEnv(), 'test')
-  })
-  it('getDbURI', () => {
-    assert.ok(getDbURI().match(/bizumie-test/))
-  })
-  it('getJWTSecret', () => {
-    assert.equal(typeof getJWTSecret(), 'string')
+  it('getUserModel, getUploadModel', () => {
+    const db = createDb()
+    assert.ok(getUserModel(db))
+    assert.ok(getUploadModel(db))
   })
 })
 
@@ -61,9 +35,10 @@ describe('http', () => {
     const server = createServer()
     return startServer(server).then(() => stopServer(server))
   })
-  it('createUserJWT', () => {
-    const user = { id: 'test' }
-    const token = createUserJWT(user)
-    assert.ok(token)
+})
+
+describe('user', () => {
+  it('createUserToken', () => {
+    assert.equal(length(createUserToken({ id: 'test' })), 71)
   })
 })
